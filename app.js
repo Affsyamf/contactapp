@@ -42,24 +42,60 @@ if (!fs.existsSync(filePath)) {
 }
 
 
-
-
-
-rl.question('What is your name? ', (name) => {
-    rl.question('What is your age? ', (age) => {
-        const contact = { name, age };
-        const file = fs.readFileSync('data/contact.json','utf8');
-        const contacts =  JSON.parse(file);
-        
-        contacts.push(contact);
-        console.log(contacts);
-
-        fs.writeFileSync('data/contact.json', JSON.stringify(contacts))
-
-
-        console.log('Terimakasih sudah memasukam data pinjol');
- rl.close() 
+const tulispertanyaan = (pertanyaan) => {
+    return new Promise((resolve, reject) => {
+        rl.question(pertanyaan, (name) => {
+        resolve(name);
     })
-
 })
+}
+
+// const pertanyaan2 = () => {
+//     return new Promise((resolve, reject) => {
+//         rl.question('What is your age? ', (age) => {
+//         resolve(age);
+//     })
+// })
+// }
+
+const main = async () => {
+
+    const name = await tulispertanyaan('Masukan nama anda : ')
+    const age = await tulispertanyaan('Masukan umur anda : ')
+
+
+     const contact = { name, age };
+         const file = fs.readFileSync('data/contact.json','utf8');
+         const contacts =  JSON.parse(file);
+        
+         contacts.push(contact);
+         console.log(contacts);
+
+         fs.writeFileSync('data/contact.json', JSON.stringify(contacts))
+
+
+         console.log('Terimakasih sudah memasukam data pinjol');
+          rl.close() 
+}
+
+main();
+
+
+// rl.question('What is your name? ', (name) => {
+//     rl.question('What is your age? ', (age) => {
+//         const contact = { name, age };
+//         const file = fs.readFileSync('data/contact.json','utf8');
+//         const contacts =  JSON.parse(file);
+        
+//         contacts.push(contact);
+//         console.log(contacts);
+
+//         fs.writeFileSync('data/contact.json', JSON.stringify(contacts))
+
+
+//         console.log('Terimakasih sudah memasukam data pinjol');
+//  rl.close() 
+//     })
+
+// })
 
