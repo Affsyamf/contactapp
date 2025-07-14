@@ -31,6 +31,19 @@ const rl = readLine.createInterface({
     output: process.stdout
 });
 
+const dirPath = './data';
+if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath);
+}
+
+const filePath = './data/contact.json';
+if (!fs.existsSync(filePath)) { 
+    fs.writeFileSync(filePath,'[]','utf8')
+}
+
+
+
+
 
 rl.question('What is your name? ', (name) => {
     rl.question('What is your age? ', (age) => {
