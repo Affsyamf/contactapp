@@ -21,7 +21,7 @@ yargs.command ({
         nohp: {
             describe: 'Isi nomor',
             demandOption: true,
-            type: 'integer'
+            type: 'string'
         },
     },
     handler(argv) {
