@@ -37,7 +37,7 @@ const simpanKontak = (name, age) => {
          fs.writeFileSync('data/contact.json', JSON.stringify(contacts))
 
 
-         console.log('Terimakasih sudah memasukam data pinjol');
+         console.log('Terimakasih sudah memasukan data pinjol');
           rl.close() 
 }
 
