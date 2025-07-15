@@ -1,13 +1,14 @@
 const { type } = require('os')
 const { argv } = require('process')
 const yargs = require ('yargs')
+const contact = require('./contacts')
 //ambil argumen dari command line
 
 yargs.command ({
     command: 'add',
     describe: 'Menambahkan kontak baru',
     builder: {
-        nama: {
+        name: {
             describe: 'Nama Lengkap',
             demandOption: true,
             type: 'string'
@@ -24,12 +25,7 @@ yargs.command ({
         },
     },
     handler(argv) {
-        const contact = {
-            nama: argv.nama,
-            email: argv.email,
-            nohp: argv.nohp,
-        }
-        console.log(contact)
+       contact.simpanKontak(argv.name, argv.email, argv.nohp)
     }
 })
 
