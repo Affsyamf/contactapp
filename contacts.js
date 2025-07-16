@@ -1,56 +1,59 @@
-const fs = require ('fs');
-const chalk = require ('chalk')
-const validator = require ('validator')
+const fs = require('fs');
+const chalk = require('chalk');
+const validator = require('validator');
 
 const dirPath = './data';
 if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath);
 }
 
-const filePath = './data/contact.json';
-if (!fs.existsSync(filePath)) { 
-    fs.writeFileSync(filePath,'[]','utf8')
+const filePath = './data/contacts.json';
+if (!fs.existsSync(filePath)) {
+    fs.writeFileSync(filePath, '[]', 'utf8');
 }
 
-
+const loadContact = () => {
+    const file = fs.readFileSync(filePath, 'utf8');
+    const contacts = JSON.parse(file);
+    return contacts;
+}
 
 const simpanKontak = (name, email, nohp) => {
     const contact = { name, email, nohp };
-         const file = fs.readFileSync('data/contact.json','utf8');
-         const contacts =  JSON.parse(file);
+    const contacts = loadContact();
 
+    // Cek duplikasi
+    const duplikasi = contacts.find((contact) => contact.name === name);
+    if (duplikasi) {
+        console.log(chalk.red.inverse.bold('Nama sudah digunakan. Cari nama lain.'));
+        return false;
+    }
 
-         //cek duplikasi
-         const duplikasi = contacts.find((contact) => contact.name === name)
-         if(duplikasi){
-            console.log(chalk.red.inverse.bold('cari nama lain '))
-            return false
-         }
+    // Cek email
+    if (email && !validator.isEmail(email)) {
+        console.log(chalk.red.inverse.bold('Email tidak valid.'));
+        return false;
+    }
 
-         //cek email
-         if(email) {
-            if(!validator.isEmail(email)) {
-                console.log(chalk.red.inverse.bold('Email tidak valid'))
-                return false
-            }
-         }
+    // Cek no hp
+    if (nohp && !validator.isMobilePhone(nohp, 'id-ID')) {
+        console.log(chalk.red.inverse.bold('Nomor HP tidak valid.'));
+        return false;
+    }
 
-         //cek no hp
-         if(nohp) {
-            if(!validator.isMobilePhone(nohp, 'id-ID')) {
-                console.log(chalk.red.inverse.bold('Nomor hp tidak valid'))
-                return false
-            }
-         }
-        
-         contacts.push(contact);
-         console.log(contacts);
+    contacts.push(contact);
 
-         fs.writeFileSync('data/contact.json', JSON.stringify(contacts))
+    fs.writeFileSync(filePath, JSON.stringify(contacts, null, 2)); // pretty print
 
-
-         console.log(chalk.green.inverse.bold('Terimakasih sudah memasukan data pinjol')
-        )   
+    console.log(chalk.green.inverse.bold('Kontak berhasil disimpan!'));
 }
 
-module.exports = { simpanKontak }
+const listContact = () => {
+    const contacts = loadContact();
+    console.log(chalk.cyan.inverse('Daftar Kontak:'));
+    contacts.forEach((contact, i) => {
+        console.log(`${i + 1}. ${contact.name} - ${contact.nohp}`);
+    });
+}
+
+module.exports = { simpanKontak, listContact };
