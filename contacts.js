@@ -50,7 +50,7 @@ const simpanKontak = (name, email, nohp) => {
 
 const listContact = () => {
     const contacts = loadContact();
-    console.log(chalk.cyan.inverse('Daftar Kontak:'));
+    console.log(chalk.cyan.inverse.bold('Daftar Kontak:'));
     contacts.forEach((contact, i) => {
         console.log(`${i + 1}. ${contact.name} - ${contact.nohp}`);
     });
@@ -66,6 +66,12 @@ const detailContact = (name) => {
 if (!contact) {
     console.log(chalk.red.inverse.bold('Nama tidak ditemukan.'));
     return false;
+}
+
+console.log(chalk.cyan.inverse.bold(contact.name));
+console.log(contact.nohp);
+if (contact.email) {
+    console.log(contact.email)
 }
 }
 module.exports = { simpanKontak, listContact, detailContact };
