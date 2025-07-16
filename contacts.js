@@ -74,4 +74,20 @@ if (contact.email) {
     console.log(contact.email)
 }
 }
-module.exports = { simpanKontak, listContact, detailContact };
+
+const deleteContact = (name) => {
+    const contacts = loadContact()
+    const newcontacts = contacts.filter(
+        (contact) => contact.name.toLowerCase() !== name.toLowerCase())
+
+        if (contacts.length === newcontacts.length) {
+    console.log(chalk.red.inverse.bold('Nama tidak ditemukan.'));
+    return false;
+}
+
+ fs.writeFileSync(filePath, JSON.stringify(newcontacts, null, 2)); // pretty print
+
+    console.log(chalk.green.inverse.bold(`data kontak ${name} berhasil dihapus`));
+
+}
+module.exports = { simpanKontak, listContact, detailContact, deleteContact };
