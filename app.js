@@ -25,7 +25,7 @@ yargs.command({
     handler(argv) {
         contact.simpanKontak(argv.name, argv.email, argv.nohp);
     }
-});
+}).demandCommand()
 
 // Command untuk menampilkan daftar kontak
 yargs.command({
@@ -35,6 +35,25 @@ yargs.command({
         contact.listContact();
     }
 });
+
+
+//menampilkan detail sebuah kontak
+yargs.command({
+    command: 'detail',
+    describe: 'Menampilkan detail semua kontak berdasarkan nama',
+    builder: {
+        name: {
+            describe: 'Nama lengkap',
+            demandOption: true,
+            type: 'string'
+        },
+    },
+    handler(argv) {
+        contact.detailContact(argv.name);
+    }
+});
+
+
 
 // Jalankan yargs
 yargs.parse(); // ini cukup, jangan kasih argumen

@@ -56,4 +56,16 @@ const listContact = () => {
     });
 }
 
-module.exports = { simpanKontak, listContact };
+const detailContact = (name) => {
+    const contacts = loadContact()
+
+    const contact = contacts.find(
+        (contact) => contact.name.toLowerCase() === name.toLowerCase())
+
+
+if (!contact) {
+    console.log(chalk.red.inverse.bold('Nama tidak ditemukan.'));
+    return false;
+}
+}
+module.exports = { simpanKontak, listContact, detailContact };
